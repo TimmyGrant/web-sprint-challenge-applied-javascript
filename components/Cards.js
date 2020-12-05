@@ -27,39 +27,53 @@
 
 function cardMaker(obj){
     const card = document.createElement('div')
-    const headline = document.createElement('div')
+    const headlineTitle = document.createElement('div')
     const author = document.createElement('div')
     const imgContainer = document.createElement('div')
     const image = document.createElement('img')
     const authorsName = document.createElement('span')
     card.classList.add('card')
-    headline.classList.add('headline')
+    headlineTitle.classList.add('headline')
     author.classList.add('author')
     imgContainer.classList.add('img-container')
-    headline.textContent = `${obj.headline}`
+    headlineTitle.textContent = `${obj.headline}`
     image.src = `${obj.authorPhoto}`
     authorsName.textContent = `${obj.authorName}`
-    card.appendChild(headline)
+    card.appendChild(headlineTitle)
     card.appendChild(author)
     author.appendChild(imgContainer)
     imgContainer.appendChild(image)
     author.appendChild(authorsName);
+    card.addEventListener('click', (event) => {
+            console.log(`${obj.headline}`)
+        })
     return card;
 }
-console.log(cardMaker());
+// console.log(cardMaker());
+
+headTitle = document.querySelector('.headline')
 const cardContainer = document.querySelector('.cards-container');
 axios
     .get('https://lambda-times-api.herokuapp.com/articles')
     .then((res) => {
         console.log(res);
+        const articless = res.data.articles;
         const bootStrap = res.data.articles.bootstrap;
-        const javaScrip = res.data.articles.javascript;
+        const javaScript = res.data.articles.javascript;
         const jQuery = res.data.articles.jquery;
         const node = res.data.articles.node;
         const tech = res.data.articles.technology;
-        bootStrap.forEach((item) => {
-            const newCard = cardMaker(item)
-            cardContainer.appendChild(card)
+        bootStrap.forEach((obj) => {
+            const newCard = cardMaker(obj)
+            cardContainer.appendChild(newCard)
+            // debugger;
+            // headTitle.textContent = `${obj.headline}`;
+            // debugger;
+            // image.src = `${this.authorPhoto}`
+            // authorsName.textContent = `${this.authorName}`
+            
+            console.log(newCard)
+        })
 
         //     const card = document.createElement('div')
         //     const headline = document.createElement('div')
@@ -67,9 +81,29 @@ axios
         //     const imgContainer = document.createElement('div')
         //     const image = document.createElement('img')
         //     const authorsName = document.createElement('img')
-
+        javaScript.forEach((obj) => {
+            const newCard = cardMaker(obj)
+            cardContainer.appendChild(newCard)
+            console.log(newCard)
         })
+        jQuery.forEach((obj) => {
+            const newCard = cardMaker(obj)
+            cardContainer.appendChild(newCard)
+            console.log(newCard)
+        })
+        node.forEach((obj) => {
+            const newCard = cardMaker(obj)
+            cardContainer.appendChild(newCard)
+            console.log(newCard)
+        })
+        tech.forEach((obj) => {
+            const newCard = cardMaker(obj)
+            cardContainer.appendChild(newCard)
+            console.log(newCard)
+        })
+        
     })
+    
     .catch((err) => {
 
     })
